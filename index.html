@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login to Roblox (Replica)</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login to Roblox</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      background-color: #111214;
+      font-family: 'Source Sans 3', sans-serif;
+      background-color: #0f0f0f;
       color: #fff;
       display: flex;
       flex-direction: column;
@@ -19,106 +25,130 @@
 
     header {
       width: 100%;
-      background-color: #0d0e10;
+      background-color: #111;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 20px;
-      box-sizing: border-box;
+      padding: 12px 20px;
+      font-size: 15px;
     }
 
     header nav {
       display: flex;
       gap: 25px;
-      align-items: center;
     }
 
     header nav a {
       color: #fff;
       text-decoration: none;
-      font-size: 14px;
+      opacity: 0.9;
+      transition: opacity 0.2s;
     }
 
-    header .signup-btn {
-      background-color: #007bff;
-      color: #fff;
+    header nav a:hover {
+      opacity: 1;
+    }
+
+    .signup-btn {
+      background-color: #0064ff;
       border: none;
       border-radius: 6px;
-      padding: 8px 16px;
-      cursor: pointer;
+      color: #fff;
       font-weight: 600;
+      padding: 6px 16px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .signup-btn:hover {
+      background-color: #0050cc;
     }
 
     .login-container {
       width: 90%;
-      max-width: 400px;
-      background-color: #191b1f;
-      padding: 30px 25px;
+      max-width: 380px;
+      margin-top: 80px;
+      background-color: #1b1b1b;
+      padding: 35px 30px;
       border-radius: 10px;
-      margin-top: 60px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.4);
       text-align: center;
     }
 
     h2 {
-      margin-bottom: 20px;
       font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 25px;
     }
 
     input[type="text"],
     input[type="password"] {
       width: 100%;
-      padding: 12px;
+      padding: 13px;
       margin-bottom: 15px;
-      border: 1px solid #2f3136;
-      border-radius: 8px;
-      background-color: #1e2024;
-      color: #fff;
-      font-size: 14px;
-      box-sizing: border-box;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      background-color: #2f3136;
+      background-color: #2b2b2b;
+      border: 1px solid #333;
+      border-radius: 6px;
       color: #fff;
       font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s;
     }
 
-    button:hover {
-      background-color: #3a3c42;
+    input::placeholder {
+      color: #aaa;
+    }
+
+    button.login-btn {
+      width: 100%;
+      padding: 13px;
+      background-color: #2b2b2b;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      margin-bottom: 20px;
+      transition: background 0.2s;
+    }
+
+    button.login-btn:hover {
+      background-color: #3a3a3a;
     }
 
     .link {
       display: block;
-      margin-top: 15px;
       color: #ccc;
       font-size: 14px;
       text-decoration: none;
+      margin-bottom: 20px;
     }
 
     hr {
       border: none;
-      border-top: 1px solid #2f3136;
+      border-top: 1px solid #2d2d2d;
       margin: 20px 0;
     }
 
     .alt-btn {
-      background-color: #2f3136;
-      margin-top: 10px;
-      font-size: 14px;
+      width: 100%;
+      padding: 13px;
+      background-color: #3b3b3b;
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+
+    .alt-btn:hover {
+      background-color: #4b4b4b;
     }
 
     .footer-text {
-      margin-top: 20px;
       font-size: 14px;
       color: #ccc;
+      margin-top: 20px;
     }
 
     .footer-text a {
@@ -147,14 +177,13 @@
   <div class="login-container">
     <h2>Login to Roblox</h2>
     <form>
-      <input type="text" placeholder="Username/Email/Phone" required>
-      <input type="password" placeholder="Password" required>
-      <button type="submit">Log In</button>
+      <input type="text" placeholder="Username/Email/Phone" required />
+      <input type="password" placeholder="Password" required />
+      <button type="submit" class="login-btn">Log In</button>
     </form>
 
     <a href="#" class="link">Forgot Password or Username?</a>
-    <hr>
-
+    <hr />
     <button class="alt-btn">Email Me a One-Time Code</button>
     <button class="alt-btn">Use Another Device</button>
 
