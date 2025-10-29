@@ -1,196 +1,227 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="fr">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login to Roblox</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap');
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Login — Réplique fidèle (ajustable)</title>
 
-    * {
-      box-sizing: border-box;
-    }
+<!-- Polices : Poppins pour le titre, Inter pour le texte -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
 
-    body {
-      margin: 0;
-      font-family: 'Source Sans 3', sans-serif;
-      background-color: #0f0f0f;
-      color: #fff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start;
-      min-height: 100vh;
-    }
+<style>
+  :root{
+    /* Couleurs faciles à ajuster */
+    --bg: #0e0f10;            /* fond global */
+    --header: #111214;        /* header */
+    --panel: #26282b;         /* conteneur principal (plus clair que le fond) */
+    --input-bg: #232427;      /* champ input */
+    --input-border: rgba(255,255,255,0.06);
+    --accent-blue: #2f6bff;   /* bouton Sign Up (header) */
+    --muted: #bfc3c6;         /* texte secondaire */
+    --title: #ffffff;         
+    --button-alt: #3b3d40;    /* boutons secondaires */
+    --outline: rgba(255,255,255,0.12); /* trait clair pour login */
+  }
 
-    header {
-      width: 100%;
-      background-color: #111;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 20px;
-      font-size: 15px;
-    }
+  /* Reset / Base */
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background:var(--bg);
+    color:var(--muted);
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
 
-    header nav {
-      display: flex;
-      gap: 25px;
-    }
+  /* Header (mini nav) */
+  header{
+    width:100%;
+    background:var(--header);
+    padding:12px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.4) inset;
+  }
+  .nav-left{display:flex;align-items:center;gap:18px}
+  .nav-left a{
+    color:#efefef;
+    font-size:14px;
+    text-decoration:none;
+    opacity:0.95;
+  }
+  .signup{
+    background:var(--accent-blue);
+    color:#fff;
+    padding:8px 14px;
+    border-radius:10px;
+    font-weight:700;
+    border:none;
+    font-size:14px;
+    cursor:pointer;
+  }
 
-    header nav a {
-      color: #fff;
-      text-decoration: none;
-      opacity: 0.9;
-      transition: opacity 0.2s;
-    }
+  /* Center column */
+  .center-wrap{
+    width:100%;
+    max-width:420px;   /* largeur conteneur sur tablette/desktop */
+    padding:28px 18px;
+    display:flex;
+    justify-content:center;
+  }
 
-    header nav a:hover {
-      opacity: 1;
-    }
+  /* Le "panel" fidèle au screenshot : sombre, arrondi, padding important */
+  .panel{
+    width:100%;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+    background-color:var(--panel);
+    border-radius:12px;
+    padding:34px 20px 36px;
+    text-align:center;
+    box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+  }
 
-    .signup-btn {
-      background-color: #0064ff;
-      border: none;
-      border-radius: 6px;
-      color: #fff;
-      font-weight: 600;
-      padding: 6px 16px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
+  /* Titre : police ronde, grande, très visible */
+  h1{
+    margin:0 0 22px 0;
+    font-family: "Poppins", "Inter", sans-serif;
+    font-weight:700;
+    color:var(--title);
+    font-size:28px; /* augmenter/diminuer selon rendu */
+    letter-spacing:0.2px;
+  }
 
-    .signup-btn:hover {
-      background-color: #0050cc;
-    }
+  /* Inputs : hauteur et bord arrondi => proche du screenshot mobile */
+  form{
+    max-width:100%;
+  }
+  .field{
+    display:block;
+    width:100%;
+    margin:10px 0;
+  }
+  input[type="text"],
+  input[type="password"]{
+    width:100%;
+    height:52px;
+    padding:14px 16px;
+    border-radius:12px;
+    border:1px solid var(--input-border);
+    background:var(--input-bg);
+    color:#f7f7f7;
+    font-size:15px;
+    outline:none;
+    font-weight:500;
+  }
+  input::placeholder{ color: #a8acb0; font-weight:500; }
 
-    .login-container {
-      width: 90%;
-      max-width: 380px;
-      margin-top: 80px;
-      background-color: #1b1b1b;
-      padding: 35px 30px;
-      border-radius: 10px;
-      text-align: center;
-    }
+  /* Bouton principal "Log In" : fond sombre + fine bordure claire (style screenshot) */
+  .btn-primary{
+    width:100%;
+    height:52px;
+    margin-top:8px;
+    border-radius:12px;
+    background:transparent;
+    border:2px solid var(--outline);
+    color:var(--title);
+    font-size:17px;
+    font-weight:700;
+    cursor:pointer;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .btn-primary:active{ transform:translateY(1px) }
 
-    h2 {
-      font-size: 22px;
-      font-weight: 700;
-      margin-bottom: 25px;
-    }
+  .forgot{
+    display:block;
+    margin:20px 0 12px;
+    color:var(--muted);
+    text-decoration:none;
+    font-size:15px;
+    font-weight:600;
+  }
 
-    input[type="text"],
-    input[type="password"] {
-      width: 100%;
-      padding: 13px;
-      margin-bottom: 15px;
-      background-color: #2b2b2b;
-      border: 1px solid #333;
-      border-radius: 6px;
-      color: #fff;
-      font-size: 15px;
-    }
+  hr.sep{
+    border:0;
+    height:1px;
+    background:rgba(255,255,255,0.04);
+    margin:18px 0;
+  }
 
-    input::placeholder {
-      color: #aaa;
-    }
+  /* Boutons alternatifs (Email code / Use another device) */
+  .btn-alt{
+    width:100%;
+    height:50px;
+    background:var(--button-alt);
+    color:#f5f5f5;
+    border-radius:12px;
+    border:none;
+    font-weight:600;
+    margin-bottom:12px;
+    font-size:15px;
+    cursor:pointer;
+  }
 
-    button.login-btn {
-      width: 100%;
-      padding: 13px;
-      background-color: #2b2b2b;
-      border: 1px solid #444;
-      border-radius: 6px;
-      color: #fff;
-      font-weight: 600;
-      font-size: 15px;
-      cursor: pointer;
-      margin-bottom: 20px;
-      transition: background 0.2s;
-    }
+  /* Footer small text */
+  .panel-foot{
+    margin-top:14px;
+    color:var(--muted);
+    font-size:14px;
+  }
+  .panel-foot a{ color:var(--accent-blue); text-decoration:none; font-weight:700; }
 
-    button.login-btn:hover {
-      background-color: #3a3a3a;
-    }
-
-    .link {
-      display: block;
-      color: #ccc;
-      font-size: 14px;
-      text-decoration: none;
-      margin-bottom: 20px;
-    }
-
-    hr {
-      border: none;
-      border-top: 1px solid #2d2d2d;
-      margin: 20px 0;
-    }
-
-    .alt-btn {
-      width: 100%;
-      padding: 13px;
-      background-color: #3b3b3b;
-      border: none;
-      border-radius: 6px;
-      color: #fff;
-      font-weight: 600;
-      font-size: 15px;
-      margin-bottom: 10px;
-      cursor: pointer;
-    }
-
-    .alt-btn:hover {
-      background-color: #4b4b4b;
-    }
-
-    .footer-text {
-      font-size: 14px;
-      color: #ccc;
-      margin-top: 20px;
-    }
-
-    .footer-text a {
-      color: #007bff;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .footer-text a:hover {
-      text-decoration: underline;
-    }
-  </style>
+  /* Responsive tweaks for very small mobile (match screenshot narrower) */
+  @media (max-width:380px){
+    .center-wrap{ padding:18px 12px }
+    h1{ font-size:26px }
+    input[type="text"], input[type="password"]{ height:50px; border-radius:10px }
+    .btn-primary{ height:50px; border-radius:10px; font-size:16px }
+  }
+</style>
 </head>
 <body>
 
   <header>
-    <nav>
+    <div class="nav-left">
+      <a href="#" aria-hidden="true">▢</a> <!-- logo placeholder -->
       <a href="#">Charts</a>
       <a href="#">Marketplace</a>
       <a href="#">Create</a>
       <a href="#">Robux</a>
-    </nav>
-    <button class="signup-btn">Sign Up</button>
+    </div>
+    <button class="signup">Sign Up</button>
   </header>
 
-  <div class="login-container">
-    <h2>Login to Roblox</h2>
-    <form>
-      <input type="text" placeholder="Username/Email/Phone" required />
-      <input type="password" placeholder="Password" required />
-      <button type="submit" class="login-btn">Log In</button>
-    </form>
+  <main class="center-wrap">
+    <section class="panel" role="region" aria-label="Login form replica">
+      <h1>Login to Roblox</h1>
 
-    <a href="#" class="link">Forgot Password or Username?</a>
-    <hr />
-    <button class="alt-btn">Email Me a One-Time Code</button>
-    <button class="alt-btn">Use Another Device</button>
+      <form onsubmit="event.preventDefault(); alert('Submit désactivé dans la démo');">
+        <label class="field" for="u"><input id="u" type="text" placeholder="Username/Email/Phone" required></label>
+        <label class="field" for="p"><input id="p" type="password" placeholder="Password" required></label>
 
-    <div class="footer-text">
-      Don’t have an account? <a href="#">Sign Up</a>
-    </div>
-  </div>
+        <button class="btn-primary" type="submit">Log In</button>
+      </form>
+
+      <a class="forgot" href="#">Forgot Password or Username?</a>
+
+      <hr class="sep">
+
+      <button class="btn-alt">Email Me a One-Time Code</button>
+      <button class="btn-alt">Use Another Device</button>
+
+      <div class="panel-foot">
+        Don’t have an account? <a href="#">Sign Up</a>
+      </div>
+    </section>
+  </main>
 
 </body>
 </html>
